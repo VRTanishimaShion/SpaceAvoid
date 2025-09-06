@@ -19,8 +19,8 @@ public class GameManager : MonoBehaviour
     ////////////////// クラス /////////////////////
     /// <summary> プレイヤークラス </summary>
     [SerializeField] private Player _player;
-    /// <summary> プレイヤークラス </summary>
-    [SerializeField] private StageGenerator _stageGenerator;
+    /// <summary> ゲームシーンの管理 </summary>
+    [SerializeField] private GameSceneManager _gameSceneManager;
     /// <summary> 選択画面の管理 </summary>
     [SerializeField] private StageSelectSceneGenerator _stageSelectSceneGenerator;
 
@@ -93,9 +93,9 @@ public class GameManager : MonoBehaviour
         _player.InitSystem();
         _player.Init();
 
-        // ステージの初期化
-        _stageGenerator.InitSystem();
-        _stageGenerator.Init();
+        // ゲームシーンの初期化
+        _gameSceneManager.InitSystem();
+        _gameSceneManager.Init();
 
         // ステージ選択の初期化
         _stageSelectSceneGenerator.InitSystem();
@@ -117,12 +117,8 @@ public class GameManager : MonoBehaviour
         resultSceneNumber   = SetTheSceneObjects(resultScene_uiObj, resultScene_gameObj);
 
         // ステージの壁の位置を代入してプレイヤーの範囲を決める
-        Player.MovementRange movementRange;
-        movementRange.up = 0;
-        movementRange.down = 0;
-        movementRange.left = 0;
-        movementRange.right = 0;
-        _stageGenerator.SetTheMovementRange(ref movementRange);
+        Player.MovementRange movementRange = new Player.MovementRange();
+        _gameSceneManager.SetTheMovementRange(ref movementRange);
         _player.SetTheMovementRange(movementRange);
 
         // ステージ選択の初期設定
@@ -174,6 +170,7 @@ public class GameManager : MonoBehaviour
                 SetTheSceneState(SceneState.Game_Dsp);
                 break;
             case SceneState.Game_Dsp:
+                _gameSceneManager.GameSceneDPS(1);
                 break;
             case SceneState.Game_End:
                 SetTheSceneState(SceneState.Result_Init);

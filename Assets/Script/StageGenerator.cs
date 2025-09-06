@@ -15,17 +15,27 @@ public class StageGenerator : MonoBehaviour
 
     //////////////////////////////////////////////////////////////////////////
     /// <summary> 壁（オブジェクト）の管理 </summary>
-    [SerializeField] GameObject[] wallGenerator;
+    [SerializeField] private GameObject[] wallGenerator;
+    /// <summary> ステージの範囲 </summary>
+    private Player.MovementRange stageRange;
 
     /// <summary> Unityの機能の処理 </summary>
     public void InitSystem()
     {
-
+        
     }
     /// <summary> 変数の初期化など </summary>
     public void Init()
     {
+        stageRange = new Player.MovementRange();
 
+        float width = (wallGenerator[0].transform.localScale.y / 2);
+        stageRange.up = (wallGenerator[0].transform.position.y - width);
+        stageRange.down = (wallGenerator[1].transform.position.y + width);
+
+        width = (wallGenerator[2].transform.localScale.x / 2);
+        stageRange.left = (wallGenerator[2].transform.position.x + width);
+        stageRange.right = (wallGenerator[3].transform.position.x - width);
     }
 
     /// <summary>
@@ -34,11 +44,14 @@ public class StageGenerator : MonoBehaviour
     /// <param name="range"> 範囲 </param>
     public void SetTheMovementRange(ref Player.MovementRange range)
     {
-        float width = (wallGenerator[0].transform.localScale.y / 2);
-
-        range.up    = (wallGenerator[0].transform.position.y - width);
-        range.down  = (wallGenerator[1].transform.position.y + width);
-        range.left  = (wallGenerator[2].transform.position.x + width);
-        range.right = (wallGenerator[3].transform.position.x - width);
+        range = stageRange;
+    }
+    /// <summary>
+    /// ステージの範囲を返す
+    /// </summary>
+    /// <returns> ステージの範囲 </returns>
+    public Player.MovementRange GetTheMovementRange()
+    {
+        return stageRange;
     }
 }
