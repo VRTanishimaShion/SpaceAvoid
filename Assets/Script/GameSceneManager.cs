@@ -54,13 +54,13 @@ public class GameSceneManager : MonoBehaviour
         }
 
         // ‹t‡‚³‚¹‚é‚±‚Æ‚Åíœ‚É‚à‘Î‰ž
-        for(int bulletNumber = bulletGenerator.Count - 1; bulletNumber >= 0; bulletNumber--)
-        {
-            BulletBase bullet = bulletGenerator[bulletNumber];
-            bullet.Movement();
+        //for(int bulletNumber = bulletGenerator.Count - 1; bulletNumber >= 0; bulletNumber--)
+        //{
+        //    BulletBase bullet = bulletGenerator[bulletNumber];
+        //    bullet.Movement();
 
             
-        }
+        //}
     }
 
     /// <summary>
