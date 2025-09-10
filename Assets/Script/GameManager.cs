@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameSceneManager _gameSceneManager;
     /// <summary> 選択画面の管理 </summary>
     [SerializeField] private StageSelectSceneGenerator _stageSelectSceneGenerator;
+    /// <summary> ゲームデータを管理 </summary>
+    private GameDataBase _gameDataBase;
 
     /// <summary>
     /// シーンの状態
@@ -89,6 +91,10 @@ public class GameManager : MonoBehaviour
         // フレームレートの初期化
         Application.targetFrameRate = FrameRateSpeed;
 
+        // ゲームデータの初期化
+        _gameDataBase = new GameDataBase();
+        _gameDataBase.LoadAll();
+
         // プレイヤーの初期化
         _player.InitSystem();
         _player.Init();
@@ -96,6 +102,7 @@ public class GameManager : MonoBehaviour
         // ゲームシーンの初期化
         _gameSceneManager.InitSystem();
         _gameSceneManager.Init();
+        _gameSceneManager.SetTheGameManager(this);
 
         // ステージ選択の初期化
         _stageSelectSceneGenerator.InitSystem();
@@ -264,4 +271,7 @@ public class GameManager : MonoBehaviour
             number++;
         }
     }
+
+    /// <summary> ゲームデータの情報を返す </summary>
+    public GameDataBase GetTheGameDataBase(){ return _gameDataBase;}
 }
