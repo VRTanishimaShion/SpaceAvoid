@@ -16,6 +16,8 @@ public class GameSceneManager : MonoBehaviour
     [SerializeField] private StageGenerator _stageGenerator;
     /// <summary> 弾のオブジェクトを探すクラス </summary>
     [SerializeField] private BulletObjectFinder _bulletObjectFinder;
+    /// <summary> ゲーム全体の状態管理 </summary>
+    private GameManager _gameManager;
 
     /// <summary>
     /// 弾の情報
@@ -82,4 +84,7 @@ public class GameSceneManager : MonoBehaviour
     {
         _stageGenerator.SetTheMovementRange(ref range);
     }
+
+    /// <summary> ゲーム全体の状態管理を挿入 </summary>
+    public void SetTheGameManager(GameManager gameManager) { _gameManager = gameManager;}
 }
