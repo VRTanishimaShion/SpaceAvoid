@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
     }
     private SceneState _sceneState;
 
+
     /// <summary>
     /// シーンのオブジェクト
     /// </summary>
@@ -147,7 +148,7 @@ public class GameManager : MonoBehaviour
             case SceneState.Title_Dsp:
                 if(Input.GetKeyDown(KeyCode.Space))
                 {
-                    _sceneState = SceneState.Title_End;
+                    SetTheSceneState(SceneState.Title_End);
                 }
                 break;
             case SceneState.Title_End:
@@ -161,6 +162,11 @@ public class GameManager : MonoBehaviour
                 SetTheSceneState(SceneState.StageSelect_Dsp);
                 break;
             case SceneState.StageSelect_Dsp:
+                if(Input.GetKeyDown(KeyCode.Escape))
+                {
+                    SetTheSceneState(SceneState.Title_Init);
+                }
+
                 if(stageSelectNumber >= 0)
                 {
                     Debug.Log(stageSelectNumber);
@@ -178,6 +184,10 @@ public class GameManager : MonoBehaviour
                 break;
             case SceneState.Game_Dsp:
                 _gameSceneManager.GameSceneDPS(1);
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    SetTheSceneState(SceneState.Game_End);
+                }
                 break;
             case SceneState.Game_End:
                 SetTheSceneState(SceneState.Result_Init);
@@ -188,10 +198,14 @@ public class GameManager : MonoBehaviour
                 SetObjectActive(resultSceneNumber);
                 SetTheSceneState(SceneState.Result_Dsp);
                 break;
-            case SceneState.Result_Dsp: 
+            case SceneState.Result_Dsp:
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    SetTheSceneState(SceneState.Result_End);
+                }
                 break;
             case SceneState.Result_End:
-                SetTheSceneState(SceneState.Title_Init);
+                SetTheSceneState(SceneState.StageSelect_Init);
                 break;
             default:
                 break;
