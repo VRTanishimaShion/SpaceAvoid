@@ -2,24 +2,26 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ’e‚Ìí—Ş‚ÌŠÖ‚·‚éƒf[ƒ^
+/// å¼¾ã®ç¨®é¡ã®é–¢ã™ã‚‹ãƒ‡ãƒ¼ã‚¿
 /// </summary>
 public class StageScene_BulletAppearanceData
 {
-    /// <summary> ƒL[ƒ[ƒh </summary>
-    public static string key { get; set; }
+    /// <summary> ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰ </summary>
 
-    /// <summary> ’e‚Ìí—Ş </summary>
-    public string bulleType { get; set; }
-    /// <summary> ’e‚Ì‘å‚«‚³ </summary>
-    public string bulletScale { get; set; }
+    public string key { get; set; }
 
-    /// <summary> ƒRƒ“ƒXƒgƒ‰ƒNƒ^ </summary>
-    /// <param name="bulleType"> í—Ş </param>
-    /// <param name="bulletScale"> ‘å‚«‚³ </param>
-    public StageScene_BulletAppearanceData(string bulleType, string bulletScale)
+    /// <summary> å¼¾ã®ç¨®é¡ </summary>
+    public string bulletType { get; set; }
+    /// <summary> å¼¾ã®å¤§ãã• </summary>
+    public Vector2 bulletScale { get; set; }
+
+    /// <summary> ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ </summary>
+    /// <param name="bulleType"> ç¨®é¡ </param>
+    /// <param name="bulletScale"> å¤§ãã• </param>
+    public StageScene_BulletAppearanceData(string Key, string BulletType, Vector2 BulletScale)
     {
-        this.bulleType = bulleType;
-        this.bulletScale = bulletScale;
+        key = Key;
+        bulletType = BulletType;
+        bulletScale = BulletScale;
     }
 }

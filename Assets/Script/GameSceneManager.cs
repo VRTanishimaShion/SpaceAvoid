@@ -3,24 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ƒQ[ƒ€ƒV[ƒ“‚ÌŠÇ—
+/// ã‚²ãƒ¼ãƒ ã‚·ãƒ¼ãƒ³ã®ç®¡ç†
 /// </summary>
 public class GameSceneManager : MonoBehaviour
 {
     /// <summary>
-    /// ’e‚ÌŠÇ—
+    /// å¼¾ã®ç®¡ç†
     /// </summary>
     private List<BulletBase> bulletGenerator = new List<BulletBase>();
 
-    /// <summary> ƒXƒe[ƒW‚ğŠÇ—‚·‚éƒNƒ‰ƒX </summary>
+    /// <summary> ã‚¹ãƒ†ãƒ¼ã‚¸ã‚’ç®¡ç†ã™ã‚‹ã‚¯ãƒ©ã‚¹ </summary>
     [SerializeField] private StageGenerator _stageGenerator;
-    /// <summary> ’e‚ÌƒIƒuƒWƒFƒNƒg‚ğ’T‚·ƒNƒ‰ƒX </summary>
+    /// <summary> å¼¾ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’æ¢ã™ã‚¯ãƒ©ã‚¹ </summary>
     [SerializeField] private BulletObjectFinder _bulletObjectFinder;
-    /// <summary> ƒQ[ƒ€‘S‘Ì‚Ìó‘ÔŠÇ— </summary>
+    /// <summary> ã‚²ãƒ¼ãƒ å…¨ä½“ã®çŠ¶æ…‹ç®¡ç† </summary>
     private GameManager _gameManager;
 
+    /// <summary> å¼¾ã®ãƒ—ãƒ¼ãƒ«ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç®¡ç† </summary>
+    [SerializeField] private BulletPoolManager bulletPoolManager;
+
     /// <summary>
-    /// ’e‚Ìî•ñ
+    /// å¼¾ã®æƒ…å ±
     /// </summary>
     public struct bulletInfo
     {
@@ -29,19 +32,43 @@ public class GameSceneManager : MonoBehaviour
         public Vector2 launchAngle;
     }
    
-    /// <summary> Unity‚Ì‹@”\‚Ìˆ— </summary>
+    /// <summary> Unityã®æ©Ÿèƒ½ã®å‡¦ç† </summary>
     public void InitSystem()
     {
         _stageGenerator.InitSystem();
     }
-    /// <summary> •Ï”‚Ì‰Šú‰»‚È‚Ç </summary>
+    /// <summary> å¤‰æ•°ã®åˆæœŸåŒ–ãªã© </summary>
     public void Init()
     {
         _stageGenerator.Init();
     }
 
+    /// <summary> çµ‚æœŸåŒ– </summary>
+    public void GameScene_End()
+    {
+        bulletPoolManager.ClearPoolBulletObject();
+    }
+
     /// <summary>
-    /// ƒQ[ƒ€ƒV[ƒ“‚ÌüŠú‰»
+    /// ãƒ¡ã‚¤ãƒ³ãƒ‡ãƒ¼ã‚¿ã‚’æŒ¿å…¥ã™ã‚‹
+    /// </summary>
+    /// <param name="mainData"> ãƒ¡ã‚¤ãƒ³ãƒ‡ãƒ¼ã‚¿ </param>
+    public void SetTheMainData(MainData mainData)
+    {
+        bulletPoolManager.SetTheMainData(mainData);
+    }
+
+    /// <summary>
+    /// ã‚¹ãƒ†ãƒ¼ã‚¸ã®ç•ªå·ã‚’æŒ¿å…¥ã™ã‚‹
+    /// </summary>
+    /// <param name="stageNumber"> ã‚¹ãƒ†ãƒ¼ã‚¸ç•ªå· </param>
+    public void SetTheStageNumber(int stageNumber)
+    {
+        bulletPoolManager.Init(stageNumber);
+    }
+
+    /// <summary>
+    /// ã‚²ãƒ¼ãƒ ã‚·ãƒ¼ãƒ³ã®å‘¨æœŸåŒ–
     /// </summary>
     public void GameSceneDPS(int tm)
     {
@@ -55,18 +82,18 @@ public class GameSceneManager : MonoBehaviour
             bullet.Movement();
         }
 
-        // ‹t‡‚³‚¹‚é‚±‚Æ‚Åíœ‚É‚à‘Î‰
+        bulletPoolManager.DSP();
+
+        // é€†é †ã•ã›ã‚‹ã“ã¨ã§å‰Šé™¤ã«ã‚‚å¯¾å¿œ
         //for(int bulletNumber = bulletGenerator.Count - 1; bulletNumber >= 0; bulletNumber--)
         //{
         //    BulletBase bullet = bulletGenerator[bulletNumber];
-        //    bullet.Movement();
-
-            
+        //    bullet.Movement(); 
         //}
     }
 
     /// <summary>
-    /// ’e‚ğ¶‚İo‚·
+    /// å¼¾ã‚’ç”Ÿã¿å‡ºã™
     /// </summary>
     public void SpawnBullet(BulletObjectFinder.BulletType bulletType,Vector2 spawnPosition, float speed, Vector2 launchAngle)
     {
@@ -77,14 +104,14 @@ public class GameSceneManager : MonoBehaviour
     }
 
     /// <summary>
-    /// “®‚¯‚é”ÍˆÍ‚ğ‘}“ü‚·‚é
+    /// å‹•ã‘ã‚‹ç¯„å›²ã‚’æŒ¿å…¥ã™ã‚‹
     /// </summary>
-    /// <param name="range"> ”ÍˆÍ </param>
+    /// <param name="range"> ç¯„å›² </param>
     public void SetTheMovementRange(ref Player.MovementRange range)
     {
         _stageGenerator.SetTheMovementRange(ref range);
     }
 
-    /// <summary> ƒQ[ƒ€‘S‘Ì‚Ìó‘ÔŠÇ—‚ğ‘}“ü </summary>
+    /// <summary> ã‚²ãƒ¼ãƒ å…¨ä½“ã®çŠ¶æ…‹ç®¡ç†ã‚’æŒ¿å…¥ </summary>
     public void SetTheGameManager(GameManager gameManager) { _gameManager = gameManager;}
 }

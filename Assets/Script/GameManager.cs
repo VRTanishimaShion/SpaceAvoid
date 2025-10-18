@@ -4,56 +4,58 @@ using UnityEngine;
 using static GameManager;
 
 /// <summary>
-/// ƒQ[ƒ€‘S‘Ì‚Ìó‘ÔŠÇ—
+/// ã‚²ãƒ¼ãƒ å…¨ä½“ã®çŠ¶æ…‹ç®¡ç†
 /// </summary>
 public class GameManager : MonoBehaviour
 {
-    // ŒÅ’è‚Ì”
-    /// <summary> ƒtƒŒ[ƒ€ƒŒ[ƒg </summary>
+    // å›ºå®šã®æ•°
+    /// <summary> ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ¬ãƒ¼ãƒˆ </summary>
     private const int FrameRateSpeed = 60;
 
-    // •ÏX‰Â”\‚È•Ï”
+    // å¤‰æ›´å¯èƒ½ãªå¤‰æ•°
     /// <summary>  </summary>
 
     /////////////////////////////////////////////////////
-    ////////////////// ƒNƒ‰ƒX /////////////////////
-    /// <summary> ƒvƒŒƒCƒ„[ƒNƒ‰ƒX </summary>
+    ////////////////// ã‚¯ãƒ©ã‚¹ /////////////////////
+    /// <summary> ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚¯ãƒ©ã‚¹ </summary>
     [SerializeField] private Player _player;
-    /// <summary> ƒQ[ƒ€ƒV[ƒ“‚ÌŠÇ— </summary>
+    /// <summary> ã‚²ãƒ¼ãƒ ã‚·ãƒ¼ãƒ³ã®ç®¡ç† </summary>
     [SerializeField] private GameSceneManager _gameSceneManager;
-    /// <summary> ‘I‘ğ‰æ–Ê‚ÌŠÇ— </summary>
+    /// <summary> é¸æŠç”»é¢ã®ç®¡ç† </summary>
     [SerializeField] private StageSelectSceneGenerator _stageSelectSceneGenerator;
-    /// <summary> ƒQ[ƒ€ƒf[ƒ^‚ğŠÇ— </summary>
+    /// <summary> ã‚²ãƒ¼ãƒ ãƒ‡ãƒ¼ã‚¿ã‚’ç®¡ç† </summary>
     private GameDataBase _gameDataBase;
+    /// <summary> ãƒ¡ã‚¤ãƒ³ãƒ‡ãƒ¼ã‚¿ </summary>
+    [SerializeField] private MainData _mainData;
 
     /// <summary>
-    /// ƒV[ƒ“‚Ìó‘Ô
+    /// ã‚·ãƒ¼ãƒ³ã®çŠ¶æ…‹
     /// </summary>
     public enum SceneState
     {
-        Title_Init,         // ƒ^ƒCƒgƒ‹‚Ì‰Šú‰»
-        Title_Dsp,          // ƒ^ƒCƒgƒ‹‚ÌüŠú‰»
-        Title_End,          // ƒ^ƒCƒgƒ‹‚ÌIŠú‰»
-        StageSelect_Init,   // ƒXƒe[ƒW‘I‘ğ‚Ì‰Šú‰»
-        StageSelect_Dsp,    // ƒXƒe[ƒW‘I‘ğ‚ÌüŠú‰»
-        StageSelect_End,    // ƒXƒe[ƒW‘I‘ğ‚ÌIŠú‰»
-        Game_Init,          // ƒQ[ƒ€‚Ì‰Šú‰»
-        Game_Dsp,           // ƒQ[ƒ€‚ÌüŠú‰»
-        Game_End,           // ƒQ[ƒ€‚ÌIŠú‰»
-        Result_Init,        // ƒŠƒUƒ‹ƒg‚Ì‰Šú‰»
-        Result_Dsp,         // ƒŠƒUƒ‹ƒg‚Ì‰Šú‰»
-        Result_End,         // ƒŠƒUƒ‹ƒg‚Ì‰Šú‰»
+        Title_Init,         // ã‚¿ã‚¤ãƒˆãƒ«ã®åˆæœŸåŒ–
+        Title_Dsp,          // ã‚¿ã‚¤ãƒˆãƒ«ã®å‘¨æœŸåŒ–
+        Title_End,          // ã‚¿ã‚¤ãƒˆãƒ«ã®çµ‚æœŸåŒ–
+        StageSelect_Init,   // ã‚¹ãƒ†ãƒ¼ã‚¸é¸æŠã®åˆæœŸåŒ–
+        StageSelect_Dsp,    // ã‚¹ãƒ†ãƒ¼ã‚¸é¸æŠã®å‘¨æœŸåŒ–
+        StageSelect_End,    // ã‚¹ãƒ†ãƒ¼ã‚¸é¸æŠã®çµ‚æœŸåŒ–
+        Game_Init,          // ã‚²ãƒ¼ãƒ ã®åˆæœŸåŒ–
+        Game_Dsp,           // ã‚²ãƒ¼ãƒ ã®å‘¨æœŸåŒ–
+        Game_End,           // ã‚²ãƒ¼ãƒ ã®çµ‚æœŸåŒ–
+        Result_Init,        // ãƒªã‚¶ãƒ«ãƒˆã®åˆæœŸåŒ–
+        Result_Dsp,         // ãƒªã‚¶ãƒ«ãƒˆã®åˆæœŸåŒ–
+        Result_End,         // ãƒªã‚¶ãƒ«ãƒˆã®åˆæœŸåŒ–
     }
     private SceneState _sceneState;
 
 
     /// <summary>
-    /// ƒV[ƒ“‚ÌƒIƒuƒWƒFƒNƒg
+    /// ã‚·ãƒ¼ãƒ³ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
     /// </summary>
     public struct SceneObjects
     {
-        public GameObject uiObj;    // UI‚ÉŠÖ‚·‚éƒIƒuƒWƒFƒNƒg
-        public GameObject gameObj;  // ƒQ[ƒ€ƒIƒuƒWƒFƒNƒg
+        public GameObject uiObj;    // UIã«é–¢ã™ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+        public GameObject gameObj;  // ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 
         public SceneObjects(GameObject uiObj, GameObject gameObj)
         {
@@ -62,86 +64,96 @@ public class GameManager : MonoBehaviour
         }
     }
     private List<SceneObjects> _sceneObjects = new List<SceneObjects>();
-    // ƒ^ƒCƒgƒ‹‚ÌƒIƒuƒWƒFƒNƒg
+    // ã‚¿ã‚¤ãƒˆãƒ«ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
     [SerializeField] private GameObject titleScene_uiObj;
     [SerializeField] private GameObject titleScene_gameObj;
-    // ƒXƒe[ƒW‘I‘ğ‚ÌƒIƒuƒWƒFƒNƒg
+    // ã‚¹ãƒ†ãƒ¼ã‚¸é¸æŠã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
     [SerializeField] private GameObject stageSelectScene_uiObj;
     [SerializeField] private GameObject stageSelectScene_gameObj;
-    // ƒQ[ƒ€‚ÌƒIƒuƒWƒFƒNƒg
+    // ã‚²ãƒ¼ãƒ ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
     [SerializeField] private GameObject gameScene_uiObj;
     [SerializeField] private GameObject gameScene_gameObj;
-    // ƒŠƒUƒ‹ƒg‚ÌƒIƒuƒWƒFƒNƒg
+    // ãƒªã‚¶ãƒ«ãƒˆã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
     [SerializeField] private GameObject resultScene_uiObj;
     [SerializeField] private GameObject resultScene_gameObj;
     
-    /// <summary> ƒV[ƒ“‚Ì”Ô†‚ğ•Û‘¶ </summary>
+    /// <summary> ã‚·ãƒ¼ãƒ³ã®ç•ªå·ã‚’ä¿å­˜ </summary>
     private int titleSceneNumber        = 0;
     private int stageSelectSceneNumber  = 0;
     private int gameSceneNumber         = 0;
     private int resultSceneNumber       = 0;
 
-    /// <summary> ƒXƒe[ƒW”Ô† </summary>
+    /// <summary> ã‚¹ãƒ†ãƒ¼ã‚¸ç•ªå· </summary>
     private int stageSelectNumber = -1;
 
+    /// <summary> ç¾åœ¨ã®æ™‚é–“ </summary>
+    private int nowTime = 0;
+    /// <summary> æ™‚é–“ã‚’ãƒªã‚»ãƒƒãƒˆã™ã‚‹ </summary>
+    public void ResetTime() { nowTime = 0; }
+
     /// <summary>
-    /// ‰Šú‰»iˆê”Ô–Új
+    /// åˆæœŸåŒ–ï¼ˆä¸€ç•ªç›®ï¼‰
     /// </summary>
     private void Awake()
     {
-        // ƒtƒŒ[ƒ€ƒŒ[ƒg‚Ì‰Šú‰»
+        // ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ¬ãƒ¼ãƒˆã®åˆæœŸåŒ–
         Application.targetFrameRate = FrameRateSpeed;
 
-        // ƒQ[ƒ€ƒf[ƒ^‚Ì‰Šú‰»
+        // ãƒ¡ã‚¤ãƒ³ãƒ‡ãƒ¼ã‚¿
+        _mainData.MainDataInit();
+        // ã‚²ãƒ¼ãƒ ãƒ‡ãƒ¼ã‚¿ã®åˆæœŸåŒ–
         _gameDataBase = new GameDataBase();
         _gameDataBase.LoadAll();
 
-        // ƒvƒŒƒCƒ„[‚Ì‰Šú‰»
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®åˆæœŸåŒ–
         _player.InitSystem();
         _player.Init();
 
-        // ƒQ[ƒ€ƒV[ƒ“‚Ì‰Šú‰»
+        // ã‚²ãƒ¼ãƒ ã‚·ãƒ¼ãƒ³ã®åˆæœŸåŒ–
         _gameSceneManager.InitSystem();
         _gameSceneManager.Init();
         _gameSceneManager.SetTheGameManager(this);
+        _gameSceneManager.SetTheMainData(_mainData);
 
-        // ƒXƒe[ƒW‘I‘ğ‚Ì‰Šú‰»
+        // ã‚¹ãƒ†ãƒ¼ã‚¸é¸æŠã®åˆæœŸåŒ–
         _stageSelectSceneGenerator.InitSystem();
         _stageSelectSceneGenerator.Init();
     }
 
     /// <summary>
-    /// ‰Šú‰»i“ñ”Ô–Új
+    /// åˆæœŸåŒ–ï¼ˆäºŒç•ªç›®ï¼‰
     /// </summary>
     private void Start()
     {
-        // GameManager‚Ì‰Šú‰»
+        // GameManagerã®åˆæœŸåŒ–
         _sceneState = SceneState.Title_Init;
 
-        // ƒQ[ƒ€‚ÌƒIƒuƒWƒFƒNƒg‚ğŠÇ—‚µ‚â‚·‚­‚·‚é‚½‚ß‚É
+        // ã‚²ãƒ¼ãƒ ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç®¡ç†ã—ã‚„ã™ãã™ã‚‹ãŸã‚ã«
         titleSceneNumber    = SetTheSceneObjects(titleScene_uiObj, titleScene_gameObj);
         stageSelectSceneNumber = SetTheSceneObjects(stageSelectScene_uiObj, stageSelectScene_gameObj);
         gameSceneNumber     = SetTheSceneObjects(gameScene_uiObj, gameScene_gameObj);
         resultSceneNumber   = SetTheSceneObjects(resultScene_uiObj, resultScene_gameObj);
 
-        // ƒXƒe[ƒW‚Ì•Ç‚ÌˆÊ’u‚ğ‘ã“ü‚µ‚ÄƒvƒŒƒCƒ„[‚Ì”ÍˆÍ‚ğŒˆ‚ß‚é
+        // ã‚¹ãƒ†ãƒ¼ã‚¸ã®å£ã®ä½ç½®ã‚’ä»£å…¥ã—ã¦ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ç¯„å›²ã‚’æ±ºã‚ã‚‹
         Player.MovementRange movementRange = new Player.MovementRange();
         _gameSceneManager.SetTheMovementRange(ref movementRange);
         _player.SetTheMovementRange(movementRange);
 
-        // ƒXƒe[ƒW‘I‘ğ‚Ì‰Šúİ’è
+        // ã‚¹ãƒ†ãƒ¼ã‚¸é¸æŠã®åˆæœŸè¨­å®š
         _stageSelectSceneGenerator.SetTheGameManager(this);
     }
 
     /// <summary>
-    /// ƒtƒŒ[ƒ€ƒŒ[ƒgˆ—
+    /// ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ¬ãƒ¼ãƒˆå‡¦ç†
     /// </summary>
     private void Update()
     {
+        nowTime++;
         switch( _sceneState )
         {
-            // ƒ^ƒCƒgƒ‹‚ÌƒV[ƒ“
+            // ã‚¿ã‚¤ãƒˆãƒ«ã®ã‚·ãƒ¼ãƒ³
             case SceneState.Title_Init:
+                ResetTime();
                 SetObjectActive(titleSceneNumber);
                 SetTheSceneState(SceneState.Title_Dsp);
                 break;
@@ -155,9 +167,10 @@ public class GameManager : MonoBehaviour
                 SetTheSceneState(SceneState.StageSelect_Init);
                 break;
 
-            // ƒXƒe[ƒW‘I‘ğ‚ÌƒV[ƒ“
+            // ã‚¹ãƒ†ãƒ¼ã‚¸é¸æŠã®ã‚·ãƒ¼ãƒ³
             case SceneState.StageSelect_Init:
                 stageSelectNumber = -1;
+                ResetTime();
                 SetObjectActive(stageSelectSceneNumber);
                 SetTheSceneState(SceneState.StageSelect_Dsp);
                 break;
@@ -177,9 +190,14 @@ public class GameManager : MonoBehaviour
                 SetTheSceneState(SceneState.Game_Init);
                 break;
 
-            // ƒQ[ƒ€ƒV[ƒ“
+            // ã‚²ãƒ¼ãƒ ã‚·ãƒ¼ãƒ³
             case SceneState.Game_Init:
+                ResetTime();
                 SetObjectActive(gameSceneNumber);
+
+                // ã‚¹ãƒ†ãƒ¼ã‚¸ã®åˆæœŸåŒ–
+                _gameSceneManager.SetTheStageNumber(stageSelectNumber);
+
                 SetTheSceneState(SceneState.Game_Dsp);
                 break;
             case SceneState.Game_Dsp:
@@ -188,13 +206,20 @@ public class GameManager : MonoBehaviour
                 {
                     SetTheSceneState(SceneState.Game_End);
                 }
+
+                //if(nowTime >= FrameRateSpeed * 10)
+                //{
+                //    SetTheSceneState(SceneState.Game_End);
+                //}
                 break;
             case SceneState.Game_End:
                 SetTheSceneState(SceneState.Result_Init);
+                _gameSceneManager.GameScene_End();
                 break;
 
-            // ƒŠƒUƒ‹ƒgƒV[ƒ“
+            // ãƒªã‚¶ãƒ«ãƒˆã‚·ãƒ¼ãƒ³
             case SceneState.Result_Init:
+                ResetTime();
                 SetObjectActive(resultSceneNumber);
                 SetTheSceneState(SceneState.Result_Dsp);
                 break;
@@ -213,7 +238,7 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// ƒtƒŒ[ƒ€ƒŒ[ƒgˆ—iˆÚ“®ŠÖ˜Aj
+    /// ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ¬ãƒ¼ãƒˆå‡¦ç†ï¼ˆç§»å‹•é–¢é€£ï¼‰
     /// </summary>
     private void FixedUpdate()
     {
@@ -244,24 +269,24 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    /// <summary> ƒV[ƒ“‚ğİ’è‚·‚é </summary>
+    /// <summary> ã‚·ãƒ¼ãƒ³ã‚’è¨­å®šã™ã‚‹ </summary>
     public void SetTheSceneState(SceneState sceneState)
     {
         _sceneState = sceneState;
     }
-    /// <summary> ƒV[ƒ“‚Ìó‘Ô‚ğæ“¾ </summary>
+    /// <summary> ã‚·ãƒ¼ãƒ³ã®çŠ¶æ…‹ã‚’å–å¾— </summary>
     public SceneState GetSceneState() { return _sceneState; }
 
-    /// <summary> ƒXƒe[ƒW”Ô†‚ğİ’è‚·‚é </summary>
-    /// <param name="stageNumber"> ƒXƒe[ƒW”Ô† </param>
+    /// <summary> ã‚¹ãƒ†ãƒ¼ã‚¸ç•ªå·ã‚’è¨­å®šã™ã‚‹ </summary>
+    /// <param name="stageNumber"> ã‚¹ãƒ†ãƒ¼ã‚¸ç•ªå· </param>
     public void SetTheStageNumber(int stageNumber)
     {
         stageSelectNumber = stageNumber;
     }
 
-    //////////////////////////// ƒV[ƒ“‚ÌƒIƒuƒWƒFƒNƒgŠÇ— ////////////////////////////////
-    /// <summary> ƒV[ƒ“‚ÌƒIƒuƒWƒFƒNƒg‚ğİ’è‚·‚é </summary>
-    /// <returns> ƒŠƒXƒg‚Ì”Ô† </returns>
+    //////////////////////////// ã‚·ãƒ¼ãƒ³ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç®¡ç† ////////////////////////////////
+    /// <summary> ã‚·ãƒ¼ãƒ³ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’è¨­å®šã™ã‚‹ </summary>
+    /// <returns> ãƒªã‚¹ãƒˆã®ç•ªå· </returns>
     public int SetTheSceneObjects(GameObject uiObj, GameObject gameObj)
     {
         int num = _sceneObjects.Count;
@@ -270,9 +295,9 @@ public class GameManager : MonoBehaviour
         return num;
     }
 
-    /// <summary> ƒIƒuƒWƒFƒNƒg‚ÌƒAƒNƒeƒBƒuó‘Ô‚ğ•ÏX‚·‚é </summary>
-    /// <remarks> ‘Î‰‚³‚ê‚½”Ô†‚É‚æ‚Á‚Ä true or false </remarks>
-    /// <param name="sceneNumber"> ƒV[ƒ“‚Ì”Ô† </param>
+    /// <summary> ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚¢ã‚¯ãƒ†ã‚£ãƒ–çŠ¶æ…‹ã‚’å¤‰æ›´ã™ã‚‹ </summary>
+    /// <remarks> å¯¾å¿œã•ã‚ŒãŸç•ªå·ã«ã‚ˆã£ã¦ true or false </remarks>
+    /// <param name="sceneNumber"> ã‚·ãƒ¼ãƒ³ã®ç•ªå· </param>
     public void SetObjectActive(int sceneNumber)
     {
         int number = 0;
@@ -286,6 +311,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    /// <summary> ƒQ[ƒ€ƒf[ƒ^‚Ìî•ñ‚ğ•Ô‚· </summary>
+    /// <summary> ã‚²ãƒ¼ãƒ ãƒ‡ãƒ¼ã‚¿ã®æƒ…å ±ã‚’è¿”ã™ </summary>
     public GameDataBase GetTheGameDataBase(){ return _gameDataBase;}
 }

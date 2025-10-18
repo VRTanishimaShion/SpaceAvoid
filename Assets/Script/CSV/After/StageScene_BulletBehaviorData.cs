@@ -2,28 +2,29 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ’e‚Ì‹““®‚ğ•\‚·ƒf[ƒ^
+/// å¼¾ã®æŒ™å‹•ã‚’è¡¨ã™ãƒ‡ãƒ¼ã‚¿
 /// </summary>
 public class StageScene_BulletBehaviorData
 {
-    /// <summary> ƒL[ƒ[ƒh </summary>
-    public static string key { get; set; }
+    /// <summary> ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰ </summary>
+    public string key { get; set; }
 
-    /// <summary> oŒ»ƒIƒtƒZƒbƒg’l </summary>
-    public string spawnTimeOffset {  get; set; }
-    /// <summary> —\’›ƒf[ƒ^ </summary>
+    /// <summary> å‡ºç¾ã‚ªãƒ•ã‚»ãƒƒãƒˆå€¤ </summary>
+    public float spawnTimeOffset {  get; set; }
+    /// <summary> äºˆå…†ãƒ‡ãƒ¼ã‚¿ </summary>
     public string bulletPreEffect { get; set; }
-    /// <summary> ƒXƒs[ƒh </summary>
+    /// <summary> ã‚¹ãƒ”ãƒ¼ãƒ‰ </summary>
     public float bulletSpeed {  get; set; }
 
-    /// <summary> ƒRƒ“ƒXƒgƒ‰ƒNƒ^ </summary>
-    /// <param name="spawnTimeOffset"> oŒ»ƒIƒtƒZƒbƒg’l </param>
-    /// <param name="bulletPreEffect"> ’e‚Ì—\’›ƒf[ƒ^ </param>
-    /// <param name="bulletSpeed"> ’e‚ÌƒXƒs[ƒh </param>
-    public StageScene_BulletBehaviorData(string spawnTimeOffset, string bulletPreEffect, float bulletSpeed)
+    /// <summary> ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ </summary>
+    /// <param name="spawnTimeOffset"> å‡ºç¾ã‚ªãƒ•ã‚»ãƒƒãƒˆå€¤ </param>
+    /// <param name="bulletPreEffect"> å¼¾ã®äºˆå…†ãƒ‡ãƒ¼ã‚¿ </param>
+    /// <param name="bulletSpeed"> å¼¾ã®ã‚¹ãƒ”ãƒ¼ãƒ‰ </param>
+    public StageScene_BulletBehaviorData(string Key, float SpawnTimeOffset, string BulletPreEffect, float BulletSpeed)
     {
-        this.spawnTimeOffset = spawnTimeOffset;
-        this.bulletPreEffect = bulletPreEffect;
-        this.bulletSpeed = bulletSpeed;
+        key = Key;
+        spawnTimeOffset = SpawnTimeOffset;
+        bulletPreEffect = BulletPreEffect;
+        bulletSpeed = BulletSpeed;
     }
 }

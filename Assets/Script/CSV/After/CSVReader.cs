@@ -86,12 +86,16 @@ public static class CSVReader
             // ダブルクォートで囲まれたカンマを無視する正規表現でフィールドに分割
             string[] fields = Regex.Split(line.Trim(), ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
 
+            List<string> remaining = new List<string>();
+
             // 各フィールドの前後の空白とダブルクォートを削除
             for (int i = 0; i < fields.Length; i++)
             {
+                if (string.IsNullOrWhiteSpace(fields[i])) continue;
                 fields[i] = fields[i].Trim().Trim('"');
+                remaining.Add(fields[i]);
             }
-            data.Add(fields);
+            data.Add(remaining.ToArray());
         }
 
         return data.ToArray();

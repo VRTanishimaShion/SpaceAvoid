@@ -2,26 +2,28 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ƒXƒe[ƒWƒV[ƒ“‚Ì’eƒf[ƒ^
+/// ã‚¹ãƒ†ãƒ¼ã‚¸ã‚·ãƒ¼ãƒ³ã®å¼¾ãƒ‡ãƒ¼ã‚¿
 /// </summary>
 public class StageScene_BulletData
 {
-    /// <summary> ƒL[ƒ[ƒh </summary>
-    public static string key { get; set; }
+    /// <summary> ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰ </summary>
+    public string key { get; set; }
 
-    /// <summary> ’e‚Ìí—Ş‚ÌŠÖ‚·‚éƒf[ƒ^ </summary>
+    /// <summary> å¼¾ã®ç¨®é¡ã®é–¢ã™ã‚‹ãƒ‡ãƒ¼ã‚¿ </summary>
     public string bulletAppearance {  get; set; }
-    /// <summary> ‹““®‚ğ•\‚·ƒf[ƒ^ </summary>
+    /// <summary> æŒ™å‹•ã‚’è¡¨ã™ãƒ‡ãƒ¼ã‚¿ </summary>
     public string bulletBehavior {  get; set; }
-    /// <summary> À•W </summary>
-    public string worldPosition { get; set; }
-    /// <summary> Šp“x </summary>
-    public string angle { get; set; }
-    /// <summary> ƒtƒŒ[ƒ€ </summary>
+    /// <summary> åº§æ¨™ </summary>
+
+    public Vector2 worldPosition { get; set; }
+    /// <summary> è§’åº¦ </summary>
+    public Vector2 angle { get; set; }
+    /// <summary> ãƒ•ãƒ¬ãƒ¼ãƒ  </summary>
     public string frame {  get; set; }
 
-    /// <summary> ƒRƒ“ƒXƒgƒ‰ƒNƒ^ </summary>
-    public StageScene_BulletData(string Key, string BulletAppearance, string BulletBehavior, string WorldPosition, string Angle, string Frame)
+    /// <summary> ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ </summary>
+    public StageScene_BulletData(string Key, string BulletAppearance, string BulletBehavior, Vector2 WorldPosition, Vector2 Angle, string Frame)
+
     {
         key = Key;
         bulletAppearance = BulletAppearance;
