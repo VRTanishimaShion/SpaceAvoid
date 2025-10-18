@@ -23,6 +23,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameSceneManager _gameSceneManager;
     /// <summary> 選択画面の管理 </summary>
     [SerializeField] private StageSelectSceneGenerator _stageSelectSceneGenerator;
+    /// <summary> ゲームデータを管理 </summary>
+    private GameDataBase _gameDataBase;
+    /// <summary> メインデータ </summary>
+    [SerializeField] private MainData _mainData;
 
     /// <summary>
     /// シーンの状態
@@ -43,6 +47,7 @@ public class GameManager : MonoBehaviour
         Result_End,         // リザルトの初期化
     }
     private SceneState _sceneState;
+
 
     /// <summary>
     /// シーンのオブジェクト
@@ -81,6 +86,11 @@ public class GameManager : MonoBehaviour
     /// <summary> ステージ番号 </summary>
     private int stageSelectNumber = -1;
 
+    /// <summary> 現在の時間 </summary>
+    private int nowTime = 0;
+    /// <summary> 時間をリセットする </summary>
+    public void ResetTime() { nowTime = 0; }
+
     /// <summary>
     /// 初期化（一番目）
     /// </summary>
@@ -89,6 +99,13 @@ public class GameManager : MonoBehaviour
         // フレームレートの初期化
         Application.targetFrameRate = FrameRateSpeed;
 
+        // メインデータ
+        _mainData.MainDataInit();
+
+        // ゲームデータの初期化
+        _gameDataBase = new GameDataBase();
+        _gameDataBase.LoadAll();
+
         // プレイヤーの初期化
         _player.InitSystem();
         _player.Init();
@@ -96,6 +113,8 @@ public class GameManager : MonoBehaviour
         // ゲームシーンの初期化
         _gameSceneManager.InitSystem();
         _gameSceneManager.Init();
+        _gameSceneManager.SetTheGameManager(this);
+        _gameSceneManager.SetTheMainData(_mainData);
 
         // ステージ選択の初期化
         _stageSelectSceneGenerator.InitSystem();
@@ -130,17 +149,19 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void Update()
     {
+        nowTime++;
         switch( _sceneState )
         {
             // タイトルのシーン
             case SceneState.Title_Init:
+                ResetTime();
                 SetObjectActive(titleSceneNumber);
                 SetTheSceneState(SceneState.Title_Dsp);
                 break;
             case SceneState.Title_Dsp:
                 if(Input.GetKeyDown(KeyCode.Space))
                 {
-                    _sceneState = SceneState.Title_End;
+                    SetTheSceneState(SceneState.Title_End);
                 }
                 break;
             case SceneState.Title_End:
@@ -150,10 +171,16 @@ public class GameManager : MonoBehaviour
             // ステージ選択のシーン
             case SceneState.StageSelect_Init:
                 stageSelectNumber = -1;
+                ResetTime();
                 SetObjectActive(stageSelectSceneNumber);
                 SetTheSceneState(SceneState.StageSelect_Dsp);
                 break;
             case SceneState.StageSelect_Dsp:
+                if(Input.GetKeyDown(KeyCode.Escape))
+                {
+                    SetTheSceneState(SceneState.Title_Init);
+                }
+
                 if(stageSelectNumber >= 0)
                 {
                     Debug.Log(stageSelectNumber);
@@ -166,25 +193,45 @@ public class GameManager : MonoBehaviour
 
             // ゲームシーン
             case SceneState.Game_Init:
+                ResetTime();
                 SetObjectActive(gameSceneNumber);
+
+                // ステージの初期化
+                _gameSceneManager.SetTheStageNumber(stageSelectNumber);
+
                 SetTheSceneState(SceneState.Game_Dsp);
                 break;
             case SceneState.Game_Dsp:
                 _gameSceneManager.GameSceneDPS(1);
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    SetTheSceneState(SceneState.Game_End);
+                }
+
+                //if(nowTime >= FrameRateSpeed * 10)
+                //{
+                //    SetTheSceneState(SceneState.Game_End);
+                //}
                 break;
             case SceneState.Game_End:
                 SetTheSceneState(SceneState.Result_Init);
+                _gameSceneManager.GameScene_End();
                 break;
 
             // リザルトシーン
             case SceneState.Result_Init:
+                ResetTime();
                 SetObjectActive(resultSceneNumber);
                 SetTheSceneState(SceneState.Result_Dsp);
                 break;
-            case SceneState.Result_Dsp: 
+            case SceneState.Result_Dsp:
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    SetTheSceneState(SceneState.Result_End);
+                }
                 break;
             case SceneState.Result_End:
-                SetTheSceneState(SceneState.Title_Init);
+                SetTheSceneState(SceneState.StageSelect_Init);
                 break;
             default:
                 break;
@@ -264,4 +311,7 @@ public class GameManager : MonoBehaviour
             number++;
         }
     }
+
+    /// <summary> ゲームデータの情報を返す </summary>
+    public GameDataBase GetTheGameDataBase(){ return _gameDataBase;}
 }

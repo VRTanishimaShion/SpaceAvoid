@@ -1,0 +1,4 @@
+﻿// 弾データ①,（弾プレハブ名）,Scale_X,Scale_Y
+AttDt1_00,BulletSet_00,1,1
+AttDt1_01,BulletSet_00,2,1.2
+AttDt1_02,BulletSet_01,1,1

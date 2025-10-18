@@ -16,6 +16,11 @@ public class GameSceneManager : MonoBehaviour
     [SerializeField] private StageGenerator _stageGenerator;
     /// <summary> 弾のオブジェクトを探すクラス </summary>
     [SerializeField] private BulletObjectFinder _bulletObjectFinder;
+    /// <summary> ゲーム全体の状態管理 </summary>
+    private GameManager _gameManager;
+
+    /// <summary> 弾のプールオブジェクトの管理 </summary>
+    [SerializeField] private BulletPoolManager bulletPoolManager;
 
     /// <summary>
     /// 弾の情報
@@ -38,6 +43,30 @@ public class GameSceneManager : MonoBehaviour
         _stageGenerator.Init();
     }
 
+    /// <summary> 終期化 </summary>
+    public void GameScene_End()
+    {
+        bulletPoolManager.ClearPoolBulletObject();
+    }
+
+    /// <summary>
+    /// メインデータを挿入する
+    /// </summary>
+    /// <param name="mainData"> メインデータ </param>
+    public void SetTheMainData(MainData mainData)
+    {
+        bulletPoolManager.SetTheMainData(mainData);
+    }
+
+    /// <summary>
+    /// ステージの番号を挿入する
+    /// </summary>
+    /// <param name="stageNumber"> ステージ番号 </param>
+    public void SetTheStageNumber(int stageNumber)
+    {
+        bulletPoolManager.Init(stageNumber);
+    }
+
     /// <summary>
     /// ゲームシーンの周期化
     /// </summary>
@@ -53,13 +82,13 @@ public class GameSceneManager : MonoBehaviour
             bullet.Movement();
         }
 
+        bulletPoolManager.DSP();
+
         // 逆順させることで削除にも対応
         //for(int bulletNumber = bulletGenerator.Count - 1; bulletNumber >= 0; bulletNumber--)
         //{
         //    BulletBase bullet = bulletGenerator[bulletNumber];
-        //    bullet.Movement();
-
-            
+        //    bullet.Movement(); 
         //}
     }
 
@@ -82,4 +111,7 @@ public class GameSceneManager : MonoBehaviour
     {
         _stageGenerator.SetTheMovementRange(ref range);
     }
+
+    /// <summary> ゲーム全体の状態管理を挿入 </summary>
+    public void SetTheGameManager(GameManager gameManager) { _gameManager = gameManager;}
 }
