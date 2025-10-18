@@ -2,26 +2,26 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ƒXƒe[ƒWƒV[ƒ“‚ÌƒtƒF[ƒYƒf[ƒ^
+/// ã‚¹ãƒ†ãƒ¼ã‚¸ã‚·ãƒ¼ãƒ³ã®ãƒ•ã‚§ãƒ¼ã‚ºãƒ‡ãƒ¼ã‚¿
 /// </summary>
 public class StageScene_PhaseData
 {
-    /// <summary> ƒL[ƒ[ƒh </summary>
+    /// <summary> ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰ </summary>
     public string key { get; set; }
 
-    /// <summary> ’e </summary>
+    /// <summary> å¼¾ </summary>
     public List<string> bullet;
 
-    /// <summary> ƒRƒ“ƒXƒgƒ‰ƒNƒ^ </summary>
-    /// <param name="Key"> ƒL[ƒ[ƒh </param>
-    /// <param name="Bullet"> ’e </param>
+    /// <summary> ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ </summary>
+    /// <param name="Key"> ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰ </param>
+    /// <param name="Bullet"> å¼¾ </param>
     public StageScene_PhaseData(string Key, List<string> Bullet)
     {
         key = Key;
         bullet = Bullet;
     }
 
-    /// <summary> ’e‚Ìæ“¾ </summary>
+    /// <summary> å¼¾ã®å–å¾— </summary>
     public List<string> GetTheBullet()
     {
         return bullet;

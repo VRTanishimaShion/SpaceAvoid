@@ -2,11 +2,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ’e‚Ì—\’›ƒf[ƒ^
+/// å¼¾ã®äºˆå…†ãƒ‡ãƒ¼ã‚¿
 /// </summary>
 public class StageScene_BulletPreEffectData
 {
-    /// <summary> ƒL[ƒ[ƒh </summary>
+    /// <summary> ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰ </summary>
     public string key { get; set; }
 
 

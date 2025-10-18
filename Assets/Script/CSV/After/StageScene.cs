@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ƒXƒe[ƒWƒV[ƒ“
+/// ã‚¹ãƒ†ãƒ¼ã‚¸ã‚·ãƒ¼ãƒ³
 /// </summary>
 public class StageScene
 {
-    /// <summary> ƒL[ƒ[ƒh </summary>
+    /// <summary> ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰ </summary>
     public string key { get; set; }
 
-    /// <summary> ƒtƒF[ƒY </summary>
+    /// <summary> ãƒ•ã‚§ãƒ¼ã‚º </summary>
     public List<string> phase = new List<string>();
-    /// <summary> ƒtƒF[ƒY </summary>
+    /// <summary> ãƒ•ã‚§ãƒ¼ã‚º </summary>
     public int neededClearCount;
 
-    /// <summary> ƒRƒ“ƒXƒgƒ‰ƒNƒ^ </summary>
+    /// <summary> ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ </summary>
     public StageScene(string Key, List<string> Phase, int NeededClearCount)
     {
         key = Key;
@@ -23,7 +23,7 @@ public class StageScene
         neededClearCount = NeededClearCount;
     }
 
-    /// <summary> ƒtƒF[ƒY‚Ìæ“¾ </summary>
+    /// <summary> ãƒ•ã‚§ãƒ¼ã‚ºã®å–å¾— </summary>
     public List<string> GetThePhase()
     {
         return phase;
