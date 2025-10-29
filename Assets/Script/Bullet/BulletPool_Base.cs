@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -11,14 +12,14 @@ public class BulletPool_Base : MonoBehaviour
     /// <summary> 弾のステータス </summary>
     private Bullet_BaseStatus bulletStatus;
     /// <summary> 弾のプール </summary>
-    private ObjectPool<Bullet_Base> bulletPool;
+    private ObjectPool<Bullet_Base> bulletPool_01;
 
     /// <summary>
     /// 初期化
     /// </summary>
     public void Initialize()
     {
-        bulletPool = new ObjectPool<Bullet_Base>(
+        bulletPool_01 = new ObjectPool<Bullet_Base>(
                 createFunc: () => InitObject(),
                 actionOnGet: (obj) => InitializeObject(obj),
                 actionOnRelease: (obj) => OnReleaseObject(obj),
@@ -36,7 +37,7 @@ public class BulletPool_Base : MonoBehaviour
     public Bullet_Base CreateTheObject(Bullet_BaseStatus BulletStatus)
     {
         bulletStatus = BulletStatus;
-        return bulletPool.Get();
+        return bulletPool_01.Get();
     }
 
     /// <summary>
@@ -44,7 +45,7 @@ public class BulletPool_Base : MonoBehaviour
     /// </summary>
     public void ClearBullet_Base()
     {
-        bulletPool.Clear();
+        bulletPool_01.Clear();
     }
 
     /// <summary>
@@ -62,7 +63,7 @@ public class BulletPool_Base : MonoBehaviour
     /// <param name="enemyObject"> 敵のオブジェクト </param>
     private void InitializeObject(Bullet_Base bullet)
     {
-        bullet.Initialize(bulletStatus,( () => bulletPool.Release(bullet)));
+        bullet.Initialize(bulletStatus,( () => bulletPool_01.Release(bullet)));
         bullet.gameObject.SetActive(true);
     }
 
@@ -72,7 +73,7 @@ public class BulletPool_Base : MonoBehaviour
     private void OnReleaseObject(Bullet_Base bullet)
     {
         // EnemyObject側で非アクティブにするのでログ出力のみ。ここで非アクティブにするパターンもある。
-        Debug.Log("Release");
+        //Debug.Log("Release");
     }
 
     /// <summary>

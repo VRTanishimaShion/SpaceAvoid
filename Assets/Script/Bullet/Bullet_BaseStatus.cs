@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 /// <summary>
 /// 弾のステータス情報（標準）
@@ -8,11 +9,11 @@ public class Bullet_BaseStatus
     public Sprite sprite;               // 見た目
     public Vector2 scale;               // 大きさ
     public float spawnTimeOffset;       // 出現オフセット
-    public float[] preEffect;           // 予兆データ
+    public List<float> preEffect;           // 予兆データ
     public float speed;                 // 速さ
     public Vector2 worldPosition;       // ワールドの位置
     public Vector2 angle;               // 角度
-    //枠データ（予定）
+    public Player.MovementRange range;  // 枠
 
     /// <summary>
     /// コンストラクタ
@@ -21,10 +22,12 @@ public class Bullet_BaseStatus
         Sprite sprite,
         Vector2 scale,
         float spawnTimeOffset,
-        float[] preEffect,
+        List<float> preEffect,
         float speed,
         Vector2 worldPosition,
-        Vector2 angle
+        Vector2 angle,
+        Player.MovementRange range
+
     )
     {
         this.sprite = sprite;
@@ -34,5 +37,6 @@ public class Bullet_BaseStatus
         this.speed = speed;
         this.worldPosition = worldPosition;
         this.angle = angle;
+        this.range = range;
     }
 }

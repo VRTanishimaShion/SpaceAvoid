@@ -2,7 +2,7 @@
 //注：PhsDt_02のBltDt_00aというのは、BltDt_00の微調整版（弾は同じだが、スピードが少し速い…等）。管理上わかりやすい表記にしました,,,,
 フェーズ番号,フェーズX弾1,フェーズX弾2,フェーズX弾3,
 PhsDt_00,BltDt_00,BltDt_01,BltDt_02,
-PhsDt_01,BltDt_03,BltDt_04,BltDt_05,
-PhsDt_02,BltDt_00a,BltDt_01a,BltDt_02a,
+PhsDt_01,BltDt_01,BltDt_01,BltDt_02,
+PhsDt_02,BltDt_01,BltDt_02,BltDt_02,
 PhsDt_03,BltDt_06,,,
 PhsDt_04,BltDt_07,BltDt_08,BltDt_09,BltDt_10

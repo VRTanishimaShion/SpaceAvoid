@@ -30,7 +30,7 @@ public class MainData : MonoBehaviour
     /// </summary>
     public void MainDataInit()
     {
-        ReadStageSceneData();
+        _ = ReadStageSceneData();
     }
 
     /// <summary>
@@ -56,21 +56,32 @@ public class MainData : MonoBehaviour
         // ƒXƒe[ƒWƒf[ƒ^
         string[][] stageData = await CSVReader.LoadCSVData("StageData.csv");
 
-        int nowPhasesNumber = 0;
         string baseName = "PhsDt_";
         if (stageData != null)
         {
             for (int i = 1; i < stageData.GetLength(0); i++)
             {
                 List<string> phases = new List<string>();
-                string phaseName = stageData[i][1];
-                string numberPart = phaseName.Split('_')[1];
-                int phaseNumber = int.Parse(numberPart);
 
-                for( ; nowPhasesNumber <= phaseNumber; nowPhasesNumber++)
+                // é–‹å§‹ãƒ•ã‚§ãƒ¼ã‚º
+                string phaseName1 = stageData[i][1];
+                string numberPart1 = phaseName1.Split('_')[1];
+                int nowPhasesNumber = int.Parse(numberPart1);
+
+                // æœ€çµ‚ãƒ•ã‚§ãƒ¼ã‚º
+                string phaseName2 = stageData[i][2];
+                string numberPart2 = phaseName2.Split('_')[1];
+                int phaseNumber2 = int.Parse(numberPart2);
+
+                for( ; nowPhasesNumber <= phaseNumber2; nowPhasesNumber++)
                 {
                     phases.Add((baseName) + (nowPhasesNumber.ToString("D2")));
                 }
+<<<<<<< Updated upstream
+=======
+                
+                stageSceneData.Add(new StageScene(stageData[i][0], phases, int.Parse(stageData[i][3])));
+>>>>>>> Stashed changes
 
                 stageSceneData.Add(new StageScene(stageData[i][0], phases, int.Parse(stageData[i][2])));
             }
@@ -84,7 +95,7 @@ public class MainData : MonoBehaviour
         string[][] phasesData = await CSVReader.LoadCSVData("PhaseData.csv");
         if (phasesData != null)
         {
-            for(int i = 1; i < phasesData.GetLength(0);i++)
+            for(int i = 3; i < phasesData.GetLength(0);i++)
             {
                 List<string> bullets = new List<string>();
                 bullets = phasesData[i].ToList<string>();
@@ -112,8 +123,8 @@ public class MainData : MonoBehaviour
                 StageScene_SharedData x = stageScene_SharedData.FirstOrDefault(p => p.key == bulletData[i][3]);
                 StageScene_SharedData y = stageScene_SharedData.FirstOrDefault(p => p.key == bulletData[i][4]);
 
-                positionX = (x != null) ? x.parameter : int.Parse(bulletData[i][3]);
-                positionY = (y != null) ? y.parameter : int.Parse(bulletData[i][4]);
+                positionX = (x != null) ? x.parameter : float.Parse(bulletData[i][3]);
+                positionY = (y != null) ? y.parameter : float.Parse(bulletData[i][4]);
 
                 float degrees = float.Parse(bulletData[i][5]);
                 float radians = degrees * Mathf.Deg2Rad;
@@ -189,6 +200,36 @@ public class MainData : MonoBehaviour
         {
             Debug.LogError("’e‚Ì‹““®‚ğ•\‚·ƒf[ƒ^‚Ìî•ñ‚ªæ‚ê‚Ä‚¢‚È‚¢");
         }
+
+
+        // å¼¾ã®äºˆå…†ãƒ‡ãƒ¼ã‚¿
+        string[][] PredictiveData = await CSVReader.LoadCSVData("PredictiveData.csv");
+        if(PredictiveData != null)
+        {
+            for(int i = 2; i < PredictiveData.GetLength(0); i++)
+            {
+                List<float> effectData = new List<float>();
+                List<string> data = new List<string>();
+                data = PredictiveData[i].ToList<string>();
+                data.Remove(PredictiveData[i][0]);
+
+                foreach(string s in data)
+                {
+                    effectData.Add(float.Parse(s));
+                }
+
+                stageScene_BulletPreEffectData.Add(
+                    new StageScene_BulletPreEffectData(
+                        PredictiveData[i][0],
+                        effectData
+                    )
+                );
+            }
+        }
+        else
+        {
+            Debug.LogError("å¼¾ã®äºˆå…†ã§ãƒ‡ãƒ¼ã‚¿ã®æƒ…å ±ãŒå–ã‚Œã¦ã„ãªã„");
+        }
     }
 
     /// <summary>
@@ -219,7 +260,11 @@ public class MainData : MonoBehaviour
         }
         else
         {
+<<<<<<< Updated upstream
             Debug.Log("ƒtƒF[ƒYƒf[ƒ^“à‚ÌƒoƒŒƒbƒg‚Ì”Ô†(string)‚ªó‚¯æ‚ê‚È‚¢");
+=======
+            //Debug.Log("ãƒ•ã‚§ãƒ¼ã‚ºãƒ‡ãƒ¼ã‚¿å†…ã®ãƒãƒ¬ãƒƒãƒˆã®ç•ªå·(string)ãŒå—ã‘å–ã‚Œãªã„");
+>>>>>>> Stashed changes
         }
 
         return null;
@@ -232,7 +277,7 @@ public class MainData : MonoBehaviour
     /// <returns> ’e </returns>
     public Bullet_BaseStatus GetTheBullet(string bulletNumber)
     {
-        Bullet_BaseStatus bullet = null;
+        Bullet_BaseStatus bullet;
 
         StageScene_BulletData bulletData = stageScene_BulletData.FirstOrDefault(p => p.key == bulletNumber);
 
@@ -240,11 +285,17 @@ public class MainData : MonoBehaviour
         StageScene_BulletAppearanceData appearanceData = stageScene_BulletAppearanceData.FirstOrDefault(p => p.key == bulletData.bulletAppearance);
         // ’eí—Ş
 
+<<<<<<< Updated upstream
         // ƒXƒP[ƒ‹
         bullet.scale = appearanceData.bulletScale;
+=======
+        // ã‚¹ã‚±ãƒ¼ãƒ«
+        Vector2 scale = appearanceData.bulletScale;
+>>>>>>> Stashed changes
 
         /// ’eƒf[ƒ^2
         StageScene_BulletBehaviorData bulletBehaviorData = stageScene_BulletBehaviorData.FirstOrDefault(p => p.key == bulletData.bulletBehavior);
+<<<<<<< Updated upstream
         // oŒ»ƒIƒtƒZƒbƒg’l
         bullet.spawnTimeOffset = bulletBehaviorData.spawnTimeOffset;
         // —\’›ƒf[ƒ^
@@ -257,9 +308,30 @@ public class MainData : MonoBehaviour
 
         /// Šp“x
         bullet.angle = bulletData.angle;
+=======
+        // å‡ºç¾ã‚ªãƒ•ã‚»ãƒƒãƒˆå€¤
+        float spawnTimeOffset = bulletBehaviorData.spawnTimeOffset;
+        // äºˆå…†ãƒ‡ãƒ¼ã‚¿
+        List<float> preEffect = stageScene_BulletPreEffectData.FirstOrDefault(p => p.key == bulletBehaviorData.bulletPreEffect).GetTheEffectTime();
+
+        // ã‚¹ãƒ”ãƒ¼ãƒ‰
+        float speed = bulletBehaviorData.bulletSpeed;
+
+        /// åº§æ¨™ãƒ‡ãƒ¼ã‚¿
+        Vector2 worldPosition = bulletData.worldPosition;
+
+        /// è§’åº¦
+        Vector2 angle = bulletData.angle;
+
+        // æ 
+        Player.MovementRange range = new Player.MovementRange();
+>>>>>>> Stashed changes
 
         /// ˜gƒf[ƒ^(¡‚Ì‚Æ‚±‚ë‚È‚¢)
 
+        bullet = new Bullet_BaseStatus(
+            null, scale, spawnTimeOffset, preEffect, speed, worldPosition, angle, range
+            );
         return bullet;
     }
 }

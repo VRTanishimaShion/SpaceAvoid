@@ -1,4 +1,4 @@
 ﻿// 弾データ②,出現オフセット,予兆データ,弾スピード
 AttDt2_00,0,PreShot_00,Speed_00
-AttDt2_01,0,PreShot_00,Speed_00
-AttDt2_02,0,PreShot_01,Speed_01
+AttDt2_01,0,PreShot_01,Speed_00
+AttDt2_02,0,PreShot_02,Speed_01

@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     /// <summary> ƒtƒŒ[ƒ€ƒŒ[ƒg </summary>
     private const int FrameRateSpeed = 60;
 
+<<<<<<< Updated upstream
     // •ÏX‰Â”\‚È•Ï”
     /// <summary>  </summary>
 
@@ -20,6 +21,19 @@ public class GameManager : MonoBehaviour
     /// <summary> ƒvƒŒƒCƒ„[ƒNƒ‰ƒX </summary>
     [SerializeField] private Player _player;
     /// <summary> ƒQ[ƒ€ƒV[ƒ“‚ÌŠÇ— </summary>
+=======
+    /// <summary> ç¾åœ¨ã®æ™‚é–“ </summary>
+    private int nowTime = 0;
+    /// <summary> æ™‚é–“ã‚’ãƒªã‚»ãƒƒãƒˆã™ã‚‹ </summary>
+    public void ResetTime() { nowTime = 0; }
+
+    // å¤‰æ›´å¯èƒ½ãªå¤‰æ•°
+    /// <summary>  </summary>
+
+    /////////////////////////////////////////////////////
+    ////////////////// ã‚¯ãƒ©ã‚¹ /////////////////////
+    /// <summary> ã‚²ãƒ¼ãƒ ã‚·ãƒ¼ãƒ³ã®ç®¡ç† </summary>
+>>>>>>> Stashed changes
     [SerializeField] private GameSceneManager _gameSceneManager;
     /// <summary> ‘I‘ğ‰æ–Ê‚ÌŠÇ— </summary>
     [SerializeField] private StageSelectSceneGenerator _stageSelectSceneGenerator;
@@ -48,6 +62,15 @@ public class GameManager : MonoBehaviour
     }
     private SceneState _sceneState;
 
+    /// <summary>
+    /// ã‚²ãƒ¼ãƒ ã®çµæœã®çŠ¶æ…‹
+    /// </summary>
+    public enum StageResultState
+    {
+        GameOver,
+        GameClear,
+    }
+    private StageResultState stageResultState;
 
     /// <summary>
     /// ƒV[ƒ“‚ÌƒIƒuƒWƒFƒNƒg
@@ -85,11 +108,31 @@ public class GameManager : MonoBehaviour
 
     /// <summary> ƒXƒe[ƒW”Ô† </summary>
     private int stageSelectNumber = -1;
+    
+    /// <summary>
+    /// ã‚²ãƒ¼ãƒ ã‚·ãƒ¼ãƒ³ã®çŠ¶æ…‹
+    /// </summary>
+    public struct GameSceneStatus
+    {
+        // ã‚²ãƒ¼ãƒ ã‚·ãƒ¼ãƒ³ãŒçµ‚äº†ã—ã¦ã„ã‚‹ã‹
+        public bool isGameSceneFinished;
+        // ã‚²ãƒ¼ãƒ ã‚·ãƒ¼ãƒ³ãŒã‚²ãƒ¼ãƒ ã‚¯ãƒªã‚¢orã‚²ãƒ¼ãƒ ã‚ªãƒ¼ãƒãƒ¼ã«ãªã£ãŸæ™‚é–“
+        public int gameFinishedTime;
 
+<<<<<<< Updated upstream
     /// <summary> Œ»İ‚ÌŠÔ </summary>
     private int nowTime = 0;
     /// <summary> ŠÔ‚ğƒŠƒZƒbƒg‚·‚é </summary>
     public void ResetTime() { nowTime = 0; }
+=======
+        public GameSceneStatus(bool IsGameSceneFinished, int GameFinishedTime)
+        {
+            isGameSceneFinished = IsGameSceneFinished;
+            gameFinishedTime = GameFinishedTime;
+        }
+    }
+    private GameSceneStatus gameSceneStatus;
+>>>>>>> Stashed changes
 
     /// <summary>
     /// ‰Šú‰»iˆê”Ô–Új
@@ -106,11 +149,15 @@ public class GameManager : MonoBehaviour
         _gameDataBase = new GameDataBase();
         _gameDataBase.LoadAll();
 
+<<<<<<< Updated upstream
         // ƒvƒŒƒCƒ„[‚Ì‰Šú‰»
         _player.InitSystem();
         _player.Init();
 
         // ƒQ[ƒ€ƒV[ƒ“‚Ì‰Šú‰»
+=======
+        // ã‚²ãƒ¼ãƒ ã‚·ãƒ¼ãƒ³ã®åˆæœŸåŒ–
+>>>>>>> Stashed changes
         _gameSceneManager.InitSystem();
         _gameSceneManager.Init();
         _gameSceneManager.SetTheGameManager(this);
@@ -129,7 +176,13 @@ public class GameManager : MonoBehaviour
         // GameManager‚Ì‰Šú‰»
         _sceneState = SceneState.Title_Init;
 
+<<<<<<< Updated upstream
         // ƒQ[ƒ€‚ÌƒIƒuƒWƒFƒNƒg‚ğŠÇ—‚µ‚â‚·‚­‚·‚é‚½‚ß‚É
+=======
+        stageResultState = StageResultState.GameOver;
+
+        // ã‚²ãƒ¼ãƒ ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç®¡ç†ã—ã‚„ã™ãã™ã‚‹ãŸã‚ã«
+>>>>>>> Stashed changes
         titleSceneNumber    = SetTheSceneObjects(titleScene_uiObj, titleScene_gameObj);
         stageSelectSceneNumber = SetTheSceneObjects(stageSelectScene_uiObj, stageSelectScene_gameObj);
         gameSceneNumber     = SetTheSceneObjects(gameScene_uiObj, gameScene_gameObj);
@@ -138,7 +191,7 @@ public class GameManager : MonoBehaviour
         // ƒXƒe[ƒW‚Ì•Ç‚ÌˆÊ’u‚ğ‘ã“ü‚µ‚ÄƒvƒŒƒCƒ„[‚Ì”ÍˆÍ‚ğŒˆ‚ß‚é
         Player.MovementRange movementRange = new Player.MovementRange();
         _gameSceneManager.SetTheMovementRange(ref movementRange);
-        _player.SetTheMovementRange(movementRange);
+        _gameSceneManager.SetTheMovementRange(movementRange);
 
         // ƒXƒe[ƒW‘I‘ğ‚Ì‰Šúİ’è
         _stageSelectSceneGenerator.SetTheGameManager(this);
@@ -198,14 +251,29 @@ public class GameManager : MonoBehaviour
 
                 // ƒXƒe[ƒW‚Ì‰Šú‰»
                 _gameSceneManager.SetTheStageNumber(stageSelectNumber);
+                _gameSceneManager.GameSceneInit();
+
+                gameSceneStatus = new GameSceneStatus(false, -1);
 
                 SetTheSceneState(SceneState.Game_Dsp);
+
+                _gameSceneManager.SetTheGameFinish(() => TriggerGameOverEvent(), () => TriggerGameClearEvent());
+                
                 break;
             case SceneState.Game_Dsp:
                 _gameSceneManager.GameSceneDPS(1);
-                if (Input.GetKeyDown(KeyCode.Space))
+                
+                //if (Input.GetKeyDown(KeyCode.Space))
+                //{
+                //    SetTheSceneState(SceneState.Game_End);
+                //}
+
+                if( gameSceneStatus.isGameSceneFinished && gameSceneStatus.gameFinishedTime >= 0)
                 {
-                    SetTheSceneState(SceneState.Game_End);
+                    if( nowTime >= (gameSceneStatus.gameFinishedTime + (FrameRateSpeed * 0)))
+                    {
+                        SetTheSceneState(SceneState.Game_End);
+                    }
                 }
 
                 //if(nowTime >= FrameRateSpeed * 10)
@@ -223,6 +291,16 @@ public class GameManager : MonoBehaviour
                 ResetTime();
                 SetObjectActive(resultSceneNumber);
                 SetTheSceneState(SceneState.Result_Dsp);
+
+                switch (stageResultState)
+                {
+                    case StageResultState.GameOver:
+                        Debug.Log("GameOver");
+                        break;
+                    case StageResultState.GameClear:
+                        Debug.Log("GameClear");
+                        break;
+                }
                 break;
             case SceneState.Result_Dsp:
                 if (Input.GetKeyDown(KeyCode.Space))
@@ -246,24 +324,12 @@ public class GameManager : MonoBehaviour
 
         switch (_sceneState)
         {
-            case SceneState.Title_Init:
-                break;
             case SceneState.Title_Dsp:
                 break;
-            case SceneState.Title_End:
-                break;
-            case SceneState.Game_Init:
-                break;
             case SceneState.Game_Dsp:
-                _player.Movement();
-                break;
-            case SceneState.Game_End:
-                break;
-            case SceneState.Result_Init:
+                _gameSceneManager.GameSceneDeltaDPS(nowTime);
                 break;
             case SceneState.Result_Dsp:
-                break;
-            case SceneState.Result_End:
                 break;
             default:
                 break;
@@ -314,4 +380,27 @@ public class GameManager : MonoBehaviour
 
     /// <summary> ƒQ[ƒ€ƒf[ƒ^‚Ìî•ñ‚ğ•Ô‚· </summary>
     public GameDataBase GetTheGameDataBase(){ return _gameDataBase;}
+
+    /// <summary> ã‚²ãƒ¼ãƒ ã‚¯ãƒªã‚¢ã®ã‚¤ãƒ™ãƒ³ãƒˆã‚’ç™ºç«ã•ã›ã‚‹ </summary>
+    public void TriggerGameClearEvent()
+    {
+        SetCurrentGameSceneStatus();
+        stageResultState = StageResultState.GameClear;
+    }
+
+    /// <summary> ã‚²ãƒ¼ãƒ ã‚ªãƒ¼ãƒãƒ¼ã®ã‚¤ãƒ™ãƒ³ãƒˆã‚’ç™ºç«ã•ã›ã‚‹ </summary>
+    public void TriggerGameOverEvent()
+    {
+        stageResultState = StageResultState.GameOver;
+        SetCurrentGameSceneStatus();
+    }
+
+    /// <summary>
+    /// ç¾åœ¨ã®ã‚·ãƒ¼ãƒ³çŠ¶æ…‹ã‚’å–å¾—ã™ã‚‹
+    /// </summary>
+    public void SetCurrentGameSceneStatus()
+    {
+        gameSceneStatus.isGameSceneFinished = true;
+        gameSceneStatus.gameFinishedTime = nowTime;
+    }
 }

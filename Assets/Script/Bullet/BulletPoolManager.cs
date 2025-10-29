@@ -1,8 +1,8 @@
 using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using System.Globalization;
+using System;
+using static Player;
 
 /// <summary>
 /// 弾のプールオブジェクトの管理
@@ -17,6 +17,20 @@ public class BulletPoolManager : MonoBehaviour
 
     /// <summary> 動きに関する弾 </summary>
     private List<Bullet_Base> movingBullet = new List<Bullet_Base>();
+
+    /// <summary> ゲームクリアイベント </summary>
+    private Action gameClearEvent;
+
+    /// <summary> 動ける枠の範囲 </summary>
+    private Player.MovementRange range = new Player.MovementRange();
+    /// <summary>
+    /// 動ける範囲を設定する
+    /// </summary>
+    /// <param name="Range"> 壁の位置 </param>
+    public void SetTheMovementRange(MovementRange Range)
+    {
+        range = Range;
+    }
 
 
     ////////// データ関係 /////////////
@@ -36,7 +50,18 @@ public class BulletPoolManager : MonoBehaviour
     /// <summary>
     /// テスト用の予兆データ
     /// </summary>
-    private float[] testPreEffect = new float[] { 3,3,1,1 };
+    private List<float> testPreEffect = new List<float> { 3,3,1,1 };
+
+    /// <summary> 現在のループしている数 </summary>
+    int nowLoopNumber = 0;
+
+    /// <summary>
+    /// システムの初期化
+    /// </summary>
+    public void SystemInit()
+    {
+        bulletPool_Base.Initialize();
+    }
 
     /// <summary>
     /// 初期化
@@ -44,21 +69,9 @@ public class BulletPoolManager : MonoBehaviour
     public void Init(int SelectStageNumber)
     {
         // 初期化
-        bulletPool_Base.Initialize();
-
         selectStageNumber = SelectStageNumber;
         nowPhasesNumber = 0;
-
-        // 仮のバレット
-        bulletTestStatus = new Bullet_BaseStatus(
-            sprite,
-            new Vector2(1, 1),
-            1.0f,
-            testPreEffect,
-            4f,
-            Vector2.zero,
-            new Vector2(0, 1)
-            );
+        nowLoopNumber = 0;
 
         SetPhaseNumber();
     }
@@ -92,6 +105,7 @@ public class BulletPoolManager : MonoBehaviour
         }
     }
 
+
     /// <summary> フェーズを挿入する </summary>
     public void SetPhaseNumber()
     {
@@ -109,22 +123,28 @@ public class BulletPoolManager : MonoBehaviour
         //次のフェーズ番号を挿入する
         nowPhasesNumber = (nowPhasesNumber + 1) % phases.Count;
 
-
+        nowLoopNumber++;
 
         // 弾の番号から弾の生成を行う
         if (bulletsInPhase == null) return;
 
+        if(nowLoopNumber >= (phases.Count * 3))
+        {
+            gameClearEvent?.Invoke();
+        }
+
         foreach(string bullet in bulletsInPhase)
         {
-            //Bullet_BaseStatus bulletStatus = mainData.GetTheBullet(bullet);
+            Bullet_BaseStatus bulletStatus = mainData.GetTheBullet(bullet);
+
+            bulletStatus.range = range;
 
             //// 仮
-            //bulletStatus.sprite = sprite;
-            //bulletStatus.preEffect = testPreEffect;
+            bulletStatus.sprite = sprite;
 
-            bulletTestStatus.worldPosition = new Vector2(Random.Range(-5f, 5f), Random.Range(0f, 3f));
+            //bulletTestStatus.worldPosition = new Vector2(UnityEngine.Random.Range(-5f, 5f), UnityEngine.Random.Range(-3f, -1f));
 
-            Bullet_Base obj = bulletPool_Base.CreateTheObject(bulletTestStatus);
+            Bullet_Base obj = bulletPool_Base.CreateTheObject(bulletStatus);
             movingBullet.Add(obj);
         }
 
@@ -135,6 +155,27 @@ public class BulletPoolManager : MonoBehaviour
     /// </summary>
     public void ClearPoolBulletObject()
     {
+        for (int i = (movingBullet.Count - 1); i >= 0; i--)
+        {
+            if (movingBullet[i].gameObject.activeSelf)
+            {
+                movingBullet[i].gameObject.SetActive(false);
+            }
+
+            movingBullet.RemoveAt(i);
+        }
+
         bulletPool_Base.ClearBullet_Base();
     }
+
+    /// <summary>
+    /// ゲームクリアイベントの発火( 仮 )
+    /// </summary>
+    /// <param name="GameClear"> ゲームクリア </param>
+    public void TriggerGameClearEvent(Action GameClear)
+    {
+        gameClearEvent = GameClear;
+    }
+
+
 }

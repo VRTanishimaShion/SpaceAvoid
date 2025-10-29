@@ -1,7 +1,7 @@
 ﻿//フェーズ内弾データ,弾データ①,弾データ②,座標X,座標Y,角度,枠
-BltDt_00,AttDt1_00,AttDt2_00,Side_U,1200,135,Frame_00
-BltDt_01,AttDt1_00,AttDt2_00,-500,Side_R,210,Frame_00
-BltDt_02,AttDt1_00,AttDt2_00,Side_D,-200,280,Frame_00
-BltDt_00a,AttDt1_00,AttDt2_01,Side_U,1200,135,Frame_00
-BltDt_01a,AttDt1_00,AttDt2_01,-500,Side_R,210,Frame_00
-BltDt_02a,AttDt1_00,AttDt2_01,Side_D,-200,280,Frame_00
+BltDt_00,AttDt1_00,AttDt2_00,-7,-2,30,Frame_00
+BltDt_01,AttDt1_01,AttDt2_02,7.1,-2,180,Frame_00
+BltDt_02,AttDt1_00,AttDt2_00,0,-4,90,Frame_00
+BltDt_03,AttDt1_01,AttDt2_02,-4,-2,0,Frame_00
+BltDt_04,AttDt1_00,AttDt2_00,4,2,0,Frame_00
+BltDt_05,AttDt1_01,AttDt2_00,0,2,0,Frame_00

@@ -8,10 +8,13 @@ public class PlayerInputController : MonoBehaviour
     // 固定の数
     /// <summary> 操作している指のIDがない場合 </summary>
     private const int ResetActiveFingerId = -1;
+    /// <summary> 操作可能か </summary>
+    private bool isController;
 
     // 変更可能な変数
     /// <summary> プニコンの離れる最大値 </summary>
     private const float Radius = 100;
+
 
     /////////////////////////////////////////////////////
     /// <summary> 操作用パネル </summary>
@@ -29,7 +32,7 @@ public class PlayerInputController : MonoBehaviour
     /// <summary> 変数の初期化など </summary>
     public void Init()
     {
-        
+        isController = true;
     }
     
     /// <summary>
@@ -38,8 +41,14 @@ public class PlayerInputController : MonoBehaviour
     /// <returns> 入力方向 </returns>
     public Vector2 GetInputVector()
     {
-        // 新規タッチ開始
-        if(Input.touchCount > 0)
+        if(!isController)
+        {
+            return Vector2.zero;
+        }
+
+#if UNITY_ANDROID && !UNITY_EDITOR
+    // 新規タッチ開始
+        if (Input.touchCount > 0)
         {
             // 触れている指をそれぞれ処理
             foreach(Touch finger in Input.touches)
@@ -74,7 +83,8 @@ public class PlayerInputController : MonoBehaviour
                 }
             }
         }
-        else if(Input.GetMouseButtonDown(0))
+#else
+        if (Input.GetMouseButtonDown(0))
         {
             startPos = Input.mousePosition;
         }
@@ -87,13 +97,13 @@ public class PlayerInputController : MonoBehaviour
                 return GetInputDirection(nowPos);
             }
         }
-        else if(Input.GetMouseButtonUp(0))
+        else if (Input.GetMouseButtonUp(0))
         {
             activeFingerId = -1;
         }
-
-            // タッチがないときは入力なし
-            return Vector2.zero;
+#endif
+        // タッチがないときは入力なし
+        return Vector2.zero;
     }
 
     /// <summary>
@@ -107,5 +117,13 @@ public class PlayerInputController : MonoBehaviour
         delta = Vector2.ClampMagnitude(delta, Radius);
         delta /= Radius;
         return delta;
+    }
+
+    /// <summary>
+    /// 操作出来なくなる
+    /// </summary>
+    public void DoNotController()
+    {
+        isController = false;
     }
 }

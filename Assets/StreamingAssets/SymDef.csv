@@ -3,5 +3,5 @@ Side_U,240
 Side_D,-240
 Side_L,-600
 Side_R,600
-Speed_00,120
-Speed_01,150
+Speed_00,2
+Speed_01,3
